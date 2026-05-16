@@ -1,14 +1,4 @@
-"""
-normalizer.py - IOC Normalisation & Deduplication Module
-----------------------------------------------------------
-After parsing, we might have:
-  - Duplicate IOCs from multiple feeds
-  - Inconsistent capitalisation (Evil.COM vs evil.com)
-  - Leading/trailing whitespace or dots
 
-This module "cleans up" all extracted IOCs and removes duplicates.
-Think of it as the "quality control" stage of the pipeline.
-"""
 
 import logging
 
