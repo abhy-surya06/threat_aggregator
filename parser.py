@@ -1,13 +1,3 @@
-"""
-parser.py - IOC Extraction / Parsing Module
---------------------------------------------
-This module extracts Indicators of Compromise (IOCs) from raw text.
-It uses regular expressions (regex) to find IPs, domains, URLs,
-file hashes, and email addresses.
-
-Think of it as the "detector" in the pipeline:
-it reads raw data and spots the suspicious patterns.
-"""
 
 import re           # Python's built-in regex library
 import ipaddress    # Python's built-in module to validate IP addresses
