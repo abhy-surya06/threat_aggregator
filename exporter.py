@@ -1,20 +1,4 @@
-"""
-exporter.py - Output / Export Module
---------------------------------------
-This is the final stage of the pipeline. It takes the enriched,
-correlated list of IOCs and writes them to various output formats:
 
-  1. IP Blocklist (.txt)     — one IP per line, firewall-ready
-  2. Domain Blocklist (.txt) — one domain per line
-  3. Full CSV Report         — all IOC types with metadata
-  4. JSON Export             — machine-readable structured output
-  5. Human-readable Summary  — plain text stats report
-
-These outputs can be fed directly into:
-  - pfSense / iptables (IP blocklist)
-  - Pi-hole / DNS resolvers (domain blocklist)
-  - SIEMs like Splunk / Elastic (CSV/JSON)
-"""
 
 import csv
 import json
@@ -26,23 +10,10 @@ logger = logging.getLogger(__name__)
 
 
 def ensure_output_dir(output_dir: str):
-    """Create the output directory if it doesn't exist."""
     os.makedirs(output_dir, exist_ok=True)
 
 
 def export_ip_blocklist(ioc_list: list, output_dir: str, min_severity: str = "LOW") -> str:
-    """
-    Write a plain text IP blocklist (one IP per line).
-    Optionally filter by minimum severity.
-
-    Args:
-        ioc_list: Full list of correlated IOCs.
-        output_dir: Directory where the file will be saved.
-        min_severity: Only export IPs at this severity or above.
-
-    Returns:
-        Path to the written file.
-    """
     severity_rank = {"LOW": 0, "MEDIUM": 1, "HIGH": 2, "CRITICAL": 3}
     min_rank = severity_rank.get(min_severity, 0)
 
@@ -69,10 +40,6 @@ def export_ip_blocklist(ioc_list: list, output_dir: str, min_severity: str = "LO
 
 
 def export_domain_blocklist(ioc_list: list, output_dir: str, min_severity: str = "LOW") -> str:
-    """
-    Write a plain text domain blocklist (one domain per line).
-    Compatible with Pi-hole and most DNS-based blocking tools.
-    """
     severity_rank = {"LOW": 0, "MEDIUM": 1, "HIGH": 2, "CRITICAL": 3}
     min_rank = severity_rank.get(min_severity, 0)
 
@@ -98,10 +65,6 @@ def export_domain_blocklist(ioc_list: list, output_dir: str, min_severity: str =
 
 
 def export_csv(ioc_list: list, output_dir: str) -> str:
-    """
-    Write the full IOC dataset as a CSV file.
-    Useful for loading into spreadsheets or SIEMs.
-    """
     ensure_output_dir(output_dir)
     filepath = os.path.join(output_dir, "ioc_report.csv")
 
@@ -126,10 +89,6 @@ def export_csv(ioc_list: list, output_dir: str) -> str:
 
 
 def export_json(ioc_list: list, output_dir: str) -> str:
-    """
-    Write the full IOC dataset as a JSON file.
-    Useful for programmatic consumption or API integration.
-    """
     ensure_output_dir(output_dir)
     filepath = os.path.join(output_dir, "ioc_report.json")
 
@@ -147,13 +106,6 @@ def export_json(ioc_list: list, output_dir: str) -> str:
 
 
 def export_summary_report(summary: dict, output_dir: str) -> str:
-    """
-    Write a human-readable plain text summary of the aggregation run.
-
-    Args:
-        summary: Output from correlator.generate_summary_report()
-        output_dir: Output directory.
-    """
     ensure_output_dir(output_dir)
     filepath = os.path.join(output_dir, "summary_report.txt")
 
