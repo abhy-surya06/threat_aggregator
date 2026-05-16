@@ -1,19 +1,3 @@
-"""
-correlator.py - IOC Correlation & Severity Scoring Module
------------------------------------------------------------
-Once we have a clean, deduplicated list of IOCs, we want to
-"score" each one. The idea: if an IP appears in 3 different
-threat feeds, it's more suspicious than one appearing in just 1.
-
-This module assigns a severity level to each IOC based on
-how many independent sources reported it.
-
-Severity scale used:
-  - 1 source  → LOW
-  - 2 sources → MEDIUM
-  - 3+ sources → HIGH
-  - Any IOC seen in 5+ sources → CRITICAL
-"""
 
 import logging
 from collections import defaultdict
@@ -46,15 +30,6 @@ def assign_severity(source_count: int) -> str:
 
 
 def correlate(ioc_list: list) -> list:
-    """
-    Enrich each IOC in the list with:
-      - feed_count: how many unique feeds reported it
-      - severity: computed from feed_count
-
-    Input: list of normalised IOC dicts (from normalizer.py)
-    Output: same list with 'feed_count' and 'severity' added to each dict.
-    """
-
     # Summary stats for logging
     severity_counts = defaultdict(int)
 
