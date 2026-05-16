@@ -1,13 +1,4 @@
-"""
-loader.py - Feed Loader Module
---------------------------------
-This module is responsible for loading threat feed content
-from either a URL (online feed) or a local file path.
 
-It acts as the "input layer" of the pipeline.
-Think of it like a librarian: you give it an address,
-it fetches the book (threat data) for you.
-"""
 
 import requests  # For fetching data from URLs
 import logging   # For writing log messages during execution
