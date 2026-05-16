@@ -1,20 +1,3 @@
-"""
-main.py - Main Entry Point / Pipeline Orchestrator
-----------------------------------------------------
-This is the file you run. It:
-  1. Loads the configuration (config.yaml)
-  2. For each feed: loads raw data → parses IOCs → collects results
-  3. Normalises and deduplicates across all feeds
-  4. Correlates and assigns severity scores
-  5. Exports all output formats
-
-Usage:
-    python main.py
-    python main.py --config my_config.yaml
-
-The pipeline flow is:
-  config → loader → parser → normalizer → correlator → exporter
-"""
 
 import argparse
 import logging
