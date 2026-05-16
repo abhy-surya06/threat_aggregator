@@ -1,0 +1,64 @@
+# =============================================================
+# config.yaml - IOC Threat Feed Aggregator Configuration
+# =============================================================
+# This file controls:
+#   - Which threat feeds to pull from (URLs or local files)
+#   - Where to save output files
+#   - What output formats to generate
+#   - Minimum severity level to include in blocklists
+#
+# To disable a feed without deleting it: set enabled: false
+# =============================================================
+
+feeds:
+  # ---- Online Threat Feeds ----
+  - name: "EmergingThreats_BlockIPs"
+    source: "https://rules.emergingthreats.net/fwrules/emerging-Block-IPs.txt"
+    enabled: false   # Set to true to fetch live — requires internet access
+
+  - name: "URLhaus_Recent_CSV"
+    source: "https://urlhaus.abuse.ch/downloads/csv_recent/"
+    enabled: false   # Set to true to fetch live
+
+  # ---- Local Test Feeds (always enabled for demo/testing) ----
+  - name: "test_ips"
+    source: "test_feeds/sample_ips.txt"
+    enabled: true
+
+  - name: "test_domains"
+    source: "test_feeds/sample_domains.txt"
+    enabled: true
+
+  - name: "test_mixed"
+    source: "test_feeds/sample_mixed.txt"
+    enabled: true
+
+  - name: "test_hashes"
+    source: "test_feeds/sample_hashes.txt"
+    enabled: true
+
+  - name: "test_csv_feed"
+    source: "test_feeds/sample_urlhaus.csv"
+    enabled: true
+
+
+output:
+  directory: "output"
+
+  # Minimum severity to include in blocklists:
+  # Options: LOW, MEDIUM, HIGH, CRITICAL
+  # LOW = include everything; HIGH = only well-corroborated threats
+  min_severity: "LOW"
+
+  # Output formats to generate:
+  # Options: ip_blocklist, domain_blocklist, csv, json, summary
+  formats:
+    - ip_blocklist
+    - domain_blocklist
+    - csv
+    - json
+    - summary
+
+
+logging:
+  level: "INFO"   # DEBUG | INFO | WARNING | ERROR
