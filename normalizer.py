@@ -6,16 +6,7 @@ logger = logging.getLogger(__name__)
 
 
 def normalize_value(value: str, ioc_type: str) -> str:
-    """
-    Normalise a single IOC value based on its type.
-
-    Rules:
-      - All types: strip leading/trailing whitespace
-      - IPs, domains, emails: convert to lowercase
-      - Hashes: convert to lowercase (hashes are case-insensitive)
-      - URLs: strip trailing slashes
-      - Domains: strip leading dots
-    """
+   
     value = value.strip()
 
     if ioc_type in ("ip", "domain", "email", "hash_md5", "hash_sha1", "hash_sha256"):
@@ -31,18 +22,7 @@ def normalize_value(value: str, ioc_type: str) -> str:
 
 
 def normalize_and_deduplicate(ioc_list: list) -> list:
-    """
-    Takes a list of raw IOC dicts (from parser.py) and:
-    1. Normalises each IOC value
-    2. Removes exact duplicates
-    3. If same IOC appears in multiple feeds, merges the source info
-
-    Input format per IOC:
-        {"value": "1.2.3.4", "type": "ip", "source": "feed_A"}
-
-    Output format per IOC:
-        {"value": "1.2.3.4", "type": "ip", "sources": ["feed_A", "feed_B"]}
-    """
+    
 
     # We use a dictionary keyed by (value, type) to track seen IOCs
     # This makes deduplication O(1) per IOC instead of O(n)
